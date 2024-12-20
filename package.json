@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
+        "serve":"lsof -ti:6002 | xargs kill -9 && vue-cli-service serve --port 6002",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint"
     },
