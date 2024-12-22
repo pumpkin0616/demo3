@@ -2,11 +2,12 @@
 import Vue from 'vue';
 
 const home = {
+  namespaced: true,
   state: {
     menuIsOpen: false
   },
   getters: {
-    menuIsOpen: state => state?.menuIsOpen
+    // menuIsOpen: state => state?.menuIsOpen
   },
   mutations: {
     // SET_ROLES: (state, roles) => {

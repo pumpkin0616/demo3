@@ -13,12 +13,10 @@
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <span>我的</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/about">选项1</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
+          <el-menu-item index="/about">关于</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="3">
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 export default {
   data () {
     return {
@@ -65,7 +63,8 @@ export default {
     // isCollapse () {
     //   return this.$store.state.menuIsOpen;
     // }
-    ...mapGetters(['menuIsOpen']),
+    // ...mapGetters(['menuIsOpen']),
+    ...mapState('home', ['menuIsOpen'])
   },
   mounted () {
     console.log(this.$route.path);

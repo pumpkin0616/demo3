@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+
 module.exports = defineConfig({
   devServer: {
     port: 3006, // 替换为您需要的端口号
