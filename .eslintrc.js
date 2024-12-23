@@ -75,7 +75,7 @@ module.exports = {
     'nuxt/no-cjs-in-config': 0,
     // 禁止使用alert confirm prompt
     // "no-alert": process.env.NODE_ENV === 'production' ? 0 : 'off',
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off',
     'no-alert': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 暂时关闭未使用变量校验
