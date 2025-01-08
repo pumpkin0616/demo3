@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="main" style="width: 1000px;height:400px;"></div>
-
+    product list
+    11111
   </div>
 </template>
 
