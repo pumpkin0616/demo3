@@ -77,6 +77,7 @@ export default {
   methods: {
     submitForm (formName) {
       console.log(this.numberValidateForm2, 'formName');
+      console.log(this.numberValidateForm2, 'formName');
 
         this.$refs[formName].validate((valid) => {
           if (valid) {
