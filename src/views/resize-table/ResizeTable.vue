@@ -46,6 +46,7 @@ export default {
       }
     },
     onMouseUp () {
+      console.log(1);
       this.isResizing = false;
       document.removeEventListener("mousemove", this.onMouseMove);
       document.removeEventListener("mouseup", this.onMouseUp);
