@@ -16,6 +16,10 @@ import '@/assets/font/iconfont.css';
  import 'vxe-table/lib/style.css';
  // ...
 import './mock/index';
+
+import VueCompositionAPI from "@vue/composition-api";
+
+Vue.use(VueCompositionAPI);
  Vue.use(VxeUI);
  Vue.use(VxeUITable);
 

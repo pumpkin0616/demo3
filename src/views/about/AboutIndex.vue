@@ -94,15 +94,17 @@ export default {
       ],
     };
   },
+  created () {
+    const time = '2025-03-10+19:23'; // "2025-03-10+19:23"
+      const decodedTime = decodeURIComponent(time); // "2025-03-10 19:23
+  },
   methods: {
     submitForm (formName) {
-      console.log(this.numberValidateForm2, "formName");
-
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("submit!");
+          // console.log("submit!");
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });

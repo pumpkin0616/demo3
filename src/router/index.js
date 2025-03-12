@@ -29,6 +29,22 @@ const routes = [
           title: '关于' // 页面标题
         },
         component: () => import('@/views/about/AboutIndex.vue')
+      },
+      {
+        path: '/table',
+        name: 'table',
+        meta: {
+          title: 'table' // 页面标题
+        },
+        component: () => import('@/views/vxe-table/VXETable.vue')
+      },
+      {
+        path: '/table1',
+        name: 'table1',
+        meta: {
+          title: 'table1' // 页面标题
+        },
+        component: () => import('@/views/resize-table/ResizeTable.vue')
       }
     ]
   },

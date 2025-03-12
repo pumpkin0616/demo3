@@ -8,6 +8,8 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
+        "@antv/s2": "^2.2.2",
+        "@vue/composition-api": "^1.7.2",
         "axios": "^1.7.9",
         "core-js": "^3.8.3",
         "echarts": "^5.5.1",

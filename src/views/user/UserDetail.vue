@@ -51,7 +51,8 @@
 import VXETable from "vxe-table";
 import axios from "axios";
 import throttle from "lodash/throttle";
-import { cloneDeep } from "lodash";
+// import { cloneDeep } from "lodash";
+import LimitPromise from "@/utils/limitPromise"; // 导入并发控制工具
 
 export default {
   data () {
@@ -64,15 +65,10 @@ export default {
       processedData: [], // 添加序号后的数据
       cachedData: {},
       shouldCalculateMergeCells: true, // 控制是否需要计算合并规则
+      limiter: LimitPromise.getInstance(5), // 使用工具类
     };
   },
   created () {
-    const a = document.createElement("a");
-    a.href = 'http://crm.kakucode.com/main/File_View.asp?action=Course&oType=couFilePathB&ID=2433';
-    a.download = "课件文件.pdf";
-    console.log(a, 'axxxky');
-    a.click();
-
     this.getUserList();
   },
   mounted () {
@@ -80,7 +76,6 @@ export default {
       setTimeout(() => {
         if (this.$refs.xTable) {
           this.$refs.xTable.reloadData(this.processedData).then(() => {
-            console.log("Data reloaded successfully");
             // 在这里不重新计算合并规则
             this.updateTableData(); // 只更新数据，不计算合并规则
           });
@@ -101,12 +96,12 @@ export default {
       });
     },
     async getTaskList (names) {
-      console.log(names, "names");
       return await axios
         .post("/task/list", {
           body: { names },
         })
         .then((response) => {
+          console.log("run task");
           // this.taskList = response.data.data.result;
           return response.data.data.result;
         });
@@ -223,13 +218,6 @@ export default {
           (item) => item.radomIndex === rowId
         ); // 第一行在 DOM 中的位置
         const endIndex = startIndex + rowElements.length - 1; // 最后一行的位置
-        console.log(
-          startIndex,
-          endIndex,
-          rowId,
-          rowElements[0],
-          "index---start"
-        );
         // 获取渲染的行数据
         const renderedRows = allRows.slice(startIndex, endIndex + 1);
 
@@ -286,7 +274,6 @@ export default {
       const names = Array.from(
         new Map(visibleRows.map((item) => [item.name, item])).values()
       );
-      console.log(visibleRows, names, 'names111-aaa');
       const rowsToFetch = [];
 
       names.forEach((row) => {
@@ -300,15 +287,22 @@ export default {
         for (let i = 0; i < rowsToFetch.length; i += batchSize) {
           batches.push(rowsToFetch.slice(i, i + batchSize));
         }
-
-        // 使用 Promise.all 来并行请求所有批次
-        // const allFetchedData = await Promise.all(
-        //   batches.map((batch) => this.getTaskList(batch)) // 对每个批次发起请求
+        console.log(batches, "batches");
+        const allFetchedData = [];
+        batches.forEach((batch) => {
+          this.limiter
+            .run(() => this.getTaskList(batch))
+            .then((result) => {
+              console.log("result", result);
+            });
+        });
+        // const allFetchedData = await this.runWithConcurrencyLimit(
+        //   2,
+        //   batches.map((batch) => () => this.getTaskList(batch))
         // );
-        const allFetchedData = await this.runWithConcurrencyLimit(
-          2,
-          batches.map((batch) => () => this.getTaskList(batch))
-        );
+        // const allFetchedData = await this.limiter.run(
+        //   batches.map((batch) => () => this.getTaskList(batch))
+        // );
         const fetchedData = allFetchedData.reduce((acc, data) => {
           return Object.assign(acc, data);
         }, {});
