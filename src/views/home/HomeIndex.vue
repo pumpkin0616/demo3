@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-table :data="tableData" border style="width: 100%" :span-method="mergeCells">
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      :span-method="mergeCells"
+    >
       <!-- 序号列（合并展示） -->
       <el-table-column label="序号" align="center" width="80">
         <template #default="scope">
@@ -13,6 +18,7 @@
       <el-table-column prop="age" label="年龄" align="center" />
       <!-- 城市列（单独展示） -->
       <el-table-column prop="city" label="城市" align="center" />
+      <div></div>
     </el-table>
   </div>
 </template>
@@ -22,16 +28,16 @@ export default {
   data () {
     return {
       tableData: [
-        { name: '张三', age: 25, city: '北京' },
-        { name: '张三', age: 25, city: '1' },
-        { name: '张三', age: 25, city: '上海' },
-        { name: '张三', age: 26, city: '广州' },
-        { name: '李四', age: 30, city: '深圳' },
-        { name: '李四', age: 30, city: '杭州' },
-        { name: '王五', age: 22, city: '南京' },
-        { name: '王五', age: 22, city: '杭州' }
+        { name: "张三", age: 25, city: "北京" },
+        { name: "张三", age: 25, city: "1" },
+        { name: "张三", age: 25, city: "上海" },
+        { name: "张三", age: 26, city: "广州" },
+        { name: "李四", age: 30, city: "深圳" },
+        { name: "李四", age: 30, city: "杭州" },
+        { name: "王五", age: 22, city: "南京" },
+        { name: "王五", age: 22, city: "杭州" },
       ],
-      mergeFields: ['name', 'age'] // 需要合并的字段
+      mergeFields: ["name", "age"], // 需要合并的字段
     };
   },
   methods: {
@@ -48,7 +54,6 @@ export default {
      */
     mergeCells ({ row, column, rowIndex, columnIndex }) {
       const data = this.tableData;
-
       // 针对需要合并的列（序号和 mergeFields 中的字段）
       if (columnIndex === 0 || this.mergeFields.includes(column.property)) {
         // 如果当前行是第一行，或者与上一行不是同一组，计算 rowspan
@@ -86,8 +91,8 @@ export default {
         }
       }
       return count;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
