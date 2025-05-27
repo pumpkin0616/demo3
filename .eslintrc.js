@@ -5,8 +5,7 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
-    '@vue/standard',
-    'prettier'
+    '@vue/standard'
   ],
   parserOptions: {
     parser: '@babel/eslint-parser',
@@ -131,8 +130,6 @@ module.exports = {
     'function-paren-newline': 0,
     'import/no-mutable-exports': 0,
     'implicit-arrow-linebreak': 0,
-    'func-names': 0,
-    // 'space-before-function-paren': ['error', 'always'], // 强制函数括号前有空格
-    // 'space-before-function-paren': 'off',
+    'func-names': 0
   }
 };

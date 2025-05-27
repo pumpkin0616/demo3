@@ -13,7 +13,7 @@ const home = {
     // SET_ROLES: (state, roles) => {
     //     state.roles = roles;
     // },
-    UPDATE_DATA(state, { key, value }) {
+    UPDATE_DATA (state, { key, value }) {
       // state.menuIsOpen = value;
       Vue.set(state, key, value);
     }
@@ -28,30 +28,30 @@ const home = {
     // }
   },
   actions: {
-    // // 登出
-    // LogOut ({ commit, reqData }) {
-    //   return new Promise((resolve, reject) => {
-    //     logout(reqData).then(response => {
-    //       commit('SET_ROLES', []);
-    //       removeToken('Token');
-    //       resolve();
-    //     });
-    //   });
-    // },
-    // // 动态修改权限;本实例中,role和token是相同的;
-    // ChangeRoles ({ commit }, role) {
-    //   return new Promise(resolve => {
-    //     const token = role;
-    //     setToken("Token", token);
-    //     getUserInfo({ token: token }).then(res => {
-    //       const data = res.data.userList;
-    //       commit('SET_ROLES', data.roles);
-    //       commit('SET_NAME', data.name);
-    //       commit('SET_AVATAR', data.avatar);
-    //       resolve();
-    //     });
-    //   });
-    // },
+      // // 登出
+      // LogOut ({ commit, reqData }) {
+      //   return new Promise((resolve, reject) => {
+      //     logout(reqData).then(response => {
+      //       commit('SET_ROLES', []);
+      //       removeToken('Token');
+      //       resolve();
+      //     });
+      //   });
+      // },
+      // // 动态修改权限;本实例中,role和token是相同的;
+      // ChangeRoles ({ commit }, role) {
+      //   return new Promise(resolve => {
+      //     const token = role;
+      //     setToken("Token", token);
+      //     getUserInfo({ token: token }).then(res => {
+      //       const data = res.data.userList;
+      //       commit('SET_ROLES', data.roles);
+      //       commit('SET_NAME', data.name);
+      //       commit('SET_AVATAR', data.avatar);
+      //       resolve();
+      //     });
+      //   });
+      // },
 
   }
 };
