@@ -1,103 +1,241 @@
 <template>
-  <div>
-    <el-table
-      :data="tableData"
-      border
-      style="width: 100%"
-      :span-method="mergeCells"
-    >
-      <!-- 序号列（合并展示） -->
-      <el-table-column label="序号" align="center" width="80">
-        <template #default="scope">
-          {{ getRowIndex(scope.$index) }}
-        </template>
-      </el-table-column>
-      <!-- 姓名列（合并展示） -->
-      <el-table-column prop="name" label="姓名" align="center" />
-      <!-- 年龄列（合并展示） -->
-      <el-table-column prop="age" label="年龄" align="center" />
-      <!-- 城市列（单独展示） -->
-      <el-table-column prop="city" label="城市" align="center" />
-      <div></div>
-    </el-table>
+  <div class="box">
+    <!-- <div class="box-item box-item-1"></div>
+    <div class="box-item box-item-2"></div>
+    <div class="box-item box-item-3"></div> -->
+    <div class="absolute-item">我是浮动元素</div>
+    <div>
+      <span class="span-box">
+        <span>2</span>
+        <span>1</span>
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import newPromise from './homeIndex';
 export default {
-  data () {
+  data() {
     return {
-      tableData: [
-        { name: "张三", age: 25, city: "北京" },
-        { name: "张三", age: 25, city: "1" },
-        { name: "张三", age: 25, city: "上海" },
-        { name: "张三", age: 26, city: "广州" },
-        { name: "李四", age: 30, city: "深圳" },
-        { name: "李四", age: 30, city: "杭州" },
-        { name: "王五", age: 22, city: "南京" },
-        { name: "王五", age: 22, city: "杭州" },
-      ],
-      mergeFields: ["name", "age"], // 需要合并的字段
+      imgUrl: 'https://se1arch-operate.cdn.bcebos.com/c63f5b937296e91b1a9a79a63328b2a6.gif'
     };
   },
+  async created() {
+    this.loadImge(this.imgUrl).then(res => {
+      console.log(res.width, 'resimg');
+
+    }).catch((err) => {
+      console.log(err);
+    });
+    const objcur = {
+      name: "Alice",
+      regularFunc() {
+        setTimeout(() => {
+          console.log(this); // 输出 "Alice"（this 指向 obj）
+
+        }, 10);
+      },
+      arrowFunc: () => {
+        console.log(this.name); // 输出 undefined（this 指向外层，如全局或模块作用域）
+      }
+    };
+    objcur.regularFunc();
+    objcur.arrowFunc();
+
+    // const res = await this.loadImg();
+    // console.log(res.width, 'res');
+    // imgP.then((res) => {
+    //   console.log(res.width, 'res');
+    // });
+    // const p1 = Promise.reject('123').catch((res) => {
+    //   throw new Error('123');
+    // });
+    // p1.catch(res => {
+    //   console.log(res);
+    // });
+    // console.log(p1, 'p1');
+    // Promise.resolve().then(() => {
+    //   console.log('1');
+    //   throw new Error('errpr');
+    // }).catch(() => {
+    //   console.log('2');
+    // }).catch(() => {
+    //   console.log('3');
+    // });
+    // console.log('async start');
+    // this.async1();
+    // console.log('async end');
+
+    // this.copy();
+
+    // console.log('start');
+    // const a = await 100;
+    // console.log(a, 'a');
+    // const b = await Promise.resolve(100);
+    // console.log(b, 'b');
+    // // eslint-disable-next-line prefer-promise-reject-errors
+    // const c = await Promise.reject(100);
+    // console.log(c, 'c');
+    // console.log('end');
+    //  const p1 = new newPromise((resolve,reject) => {
+    //   // resolve(1);
+    //   // reject('1');
+    //  });
+
+    //  console.log(p1,'p1');
+
+    //  const p2 = new Promise((resolve,reject) => {
+    //   resolve(1111);
+    //   // reject('1');
+    //  });
+    //  console.log(p2,'p2');
+    //  p2.then((res) => {
+    //   console.log(res,'res');
+    //  }).then(() => {
+    //   console.log(1);
+    //  });
+    const obj = {
+      a: 1,
+      b: {
+        c: 2,
+        d: [
+          { e: 1 }
+        ]
+      }
+    };
+    // console.log(this.deepClone(obj),'obj');
+    // const obj2 = this.deepClone(obj);
+    // obj2.b.d.e = '12121';
+    // console.log('obj', obj);
+    // console.log('obj2', obj2);
+
+  },
   methods: {
-    /**
-     * 用于判断两行数据是否属于同一组
-     */
-    isSameGroup (row1, row2) {
-      if (!row1 || !row2) return false;
-      return this.mergeFields.every((field) => row1[field] === row2[field]);
-    },
+    loadImge(src) {
+      const p = new Promise((resolve, reject) => {
+        const img = document.createElement('img');
+        console.log('src');
+        img.onload = () => {
+          console.log('onload');
+          resolve(img);
+        };
+        img.onerror = (err) => {
+          reject(err);
+        };
+        img.src = src;
 
-    /**
-     * 用于合并单元格的逻辑
-     */
-    mergeCells ({ row, column, rowIndex, columnIndex }) {
-      const data = this.tableData;
-      // 针对需要合并的列（序号和 mergeFields 中的字段）
-      if (columnIndex === 0 || this.mergeFields.includes(column.property)) {
-        // 如果当前行是第一行，或者与上一行不是同一组，计算 rowspan
-        if (rowIndex === 0 || !this.isSameGroup(row, data[rowIndex - 1])) {
-          let rowSpan = 1;
-          for (let i = rowIndex + 1; i < data.length; i++) {
-            if (this.isSameGroup(row, data[i])) {
-              rowSpan++;
-            } else {
-              break;
-            }
-          }
-          return { rowspan: rowSpan, colspan: 1 };
-        } else {
-          // 当前行与上一行是同一组，隐藏单元格
-          return { rowspan: 0, colspan: 0 };
+      });
+      return p;
+    },
+    deepClone(obj = {}) {
+      if (typeof obj !== 'object' || obj === null) {
+        return obj;
+      }
+      let result;
+      if (obj instanceof Array) {
+        result = [];
+      } else {
+        result = {};
+      }
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          result[key] = this.deepClone(obj[key]);
         }
       }
-
-      // 其他列单独展示
-      return { rowspan: 1, colspan: 1 };
+      return result;
     },
-
-    /**
-     * 获取当前行的显示序号
-     */
-    getRowIndex (index) {
-      const data = this.tableData;
-
-      // 计算序号，只对每组的第一行显示序号
-      let count = 0;
-      for (let i = 0; i <= index; i++) {
-        if (i === 0 || !this.isSameGroup(data[i], data[i - 1])) {
-          count++;
-        }
+    copy() {
+      if (Math.random() * 10 > 1) {
+        this.copy = () => {
+          console.log('1');
+        };
+      } else {
+        this.copy = () => {
+          console.log('2');
+        };
       }
-      return count;
+      this.copy();
     },
+    async async1() {
+      console.log('start async1');
+      await this.async2();
+      console.log('end async1');
+    },
+    async async2() {
+      console.log('start async2');
+    },
+    loadImg() {
+      const imgURL = "https://ydlunacommon-cdn.nosdn.127.net/9446f570a655917ad950fc7045014e41.jpg";
+      const imgP = new Promise((resolve, reject) => {
+        const img = document.createElement('img');
+        img.src = imgURL;
+        console.log('1');
+        img.onload = () => {
+          console.log('load');
+          resolve(img);
+        };
+        img.onerror = () => {
+          reject(new Error('error'));
+        };
+        console.log('2');
+      });
+      return imgP;
+    }
   },
 };
 </script>
-<style scoped>
-.el-table th,
-.el-table td {
-  text-align: center;
+
+<style lang="less" scoped>
+.box {
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  border: 1px solid #0f0;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  .box-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+  }
+
+  .box-item-1 {
+    background: red;
+  }
+
+  .box-item-2 {
+    background: yellow;
+    align-self: center;
+  }
+
+  .box-item-3 {
+    background: green;
+    align-self: flex-end;
+  }
+
+  .absolute-item {
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .span-box {
+    font-size: 20px;
+    line-height: 200%;
+
+    span {
+      font-size: 16px;
+      background: red;
+    }
+  }
 }
 </style>
