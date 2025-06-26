@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import FixedPrefixTextarea from './FixedPrefixTextarea.vue';
+import ChildForm from './ChildForm.vue';
 export default {
   data () {
     return {
